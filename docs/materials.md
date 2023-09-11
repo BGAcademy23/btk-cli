@@ -135,7 +135,7 @@ Add the other diamond blast hit file in `./precomputed/diamond/glClaSqua9.diamon
 
     blobtools add \
         --hits ./precomputed/diamond/glClaSqua9.diamond.reference_proteomes.out \
-        --taxrule bestsumorder_blastx \
+        --taxrule bestsumorder=bestsumorder_blastx \
         --taxdump ./taxdump \
         ./glClaSqua9_blobdir
     
