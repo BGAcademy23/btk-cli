@@ -1,6 +1,8 @@
 # Session Materials
 
-## Introduction to BlobToolKit
+## [Introduction to BlobToolKit](https://docs.google.com/presentation/d/1zZImXdwftssGOrHi8dsKbIFvbH5u00GK3LYEz5CDNPQ/edit?usp=sharing){ : target="_blank" }
+
+![Schematic showing how BlobToolKit Viewer is driven by a blobdir, which is made using blobtools and input mapping blast and busco files](blobdir.jpg "blobtools creates a blobdir from intermediateinput files"){ : style="border: 1px solid  gray;"}
 
 ## Demo 1
 
@@ -125,7 +127,7 @@ curl $(gp url 8000)/api/v1/search/reload/testkey
 
 ## Exercise
 
-Add the other diamond blast hit file in `./precomputed/diamond/glClaSqua9.diamond.reference_proteomes.out`. Hint: change the `blobtools add --hits` command above by changing the input filename, and also change the taxrule to `--taxrule bestsumorder_blastx`. If you don't change the taxrule name, blobtools will assume you are referring to the same 
+Add the other diamond blast hit file in `./precomputed/diamond/glClaSqua9.diamond.reference_proteomes.out`. Hint: change the `blobtools add --hits` command above by changing the input filename, and also change the taxrule to `--taxrule bestsumorder_blastx`. If you don't change the taxrule name, blobtools will assume you are referring to the same field, and will not overwrite it.
 
 ??? note "Solution"
     ```
