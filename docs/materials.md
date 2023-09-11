@@ -199,10 +199,7 @@ blobtools add \
 - **Numeric fields**
 ```
 blobtools add \
-    --text ./precomputed/window_stats/glClaSqua9.window_stats.tsv \
-    --text-delimiter '\t' \
-    --text-header \
-    --text-cols sequence=identifiers,eukaryota_odb10_count,fungi_odb10_count \
+    --bedtsvdir ./precomputed/window_stats/ \
     ./glClaSqua9_blobdir/
 ```
 
