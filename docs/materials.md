@@ -2,7 +2,7 @@
 
 ## Slides
 
-## Exercises
+## Demo 1
 
 [Launch Gitpod Workspace](https://gitpod.io/#https://github.com/bgacademy23/btk-cli){ : target="_blank" .md-button .md-button--primary }
 
@@ -62,7 +62,7 @@ blobtools
 cd /workspace/glClaSqua9
 code glClaSqua9.yaml
 ```
-    In the text editor that opens top right, paste in this information:
+    In the text editor that opens top right, paste in this information and save it:
 ```
 assembly:
   alias: glClaSqua9
@@ -110,6 +110,7 @@ blobtools add \
     --taxdump ./taxdump \
     ./glClaSqua9_blobdir
 ```
+
 - **View the blobdir in the BTK viewer**
 
     Move the blobdir into a folder that has all the blobdirs:
@@ -121,3 +122,79 @@ cp -r glClaSqua9_blobdir /workspace/btk_example/src/data/example/
 curl $(gp url 8000)/api/v1/search/reload/testkey
 ```
     Refresh the browser top right, and click on the new dataset: glClaSqua9_blobdir. By default, BTK viewer shows binned plots if there are more than 2000 contigs, so to get contigs plotted as circles, click on _Settings > shape > circle_
+
+## Exercise
+
+Add the other diamond blast hit file in `./precomputed/diamond/glClaSqua9.diamond.reference_proteomes.out`. Hint: change the `blobtools add --hits` command above by changing the input filename, and also change the taxrule to `--taxrule bestsumorder_blastx`. If you don't change the taxrule name, blobtools will assume you are referring to the same 
+
+??? note "Solution"
+    ```
+    cd /workspace/glClaSqua9
+
+    blobtools add \
+        --hits ./precomputed/diamond/glClaSqua9.diamond.reference_proteomes.out \
+        --taxrule bestsumorder_blastx \
+        --taxdump ./taxdump \
+        ./glClaSqua9_blobdir
+    
+    cp -r glClaSqua9_blobdir /workspace/btk_example/src/data/example/
+    
+    curl $(gp url 8000)/api/v1/search/reload/testkey
+    ```
+
+## Demo 2
+
+You can add any categorical value to a contig, it does not have to be a blast hit.
+
+For example, the deep-learning based tool **[tiara](https://academic.oup.com/bioinformatics/article/38/2/344/6375939){ : target="_blank" }** can very rapidly estimate if a contig is a eukaryote, bacteria, or organelle.
+
+So, to get a very quick annotation of a BTK plot, you could colour it using tiara. In this demo we install tiara, run tiara, and assign the tiara categories in BTK.
+
+Install tiara:
+```
+mamba create -n tiara -c conda-forge tiara python=3.7 -y
+mamba activate  tiara
+```
+Run tiara:
+```
+cd /workspace/glClaSqua9 
+tiara -i glClaSqua9.fasta -o glClaSqua9.tiara -t 8 --pr --tf all -m 1000
+mamba deactivate
+
+blobtools add \
+    --text glClaSqua9.tiara \
+    --text-delimiter "\t" \
+    --text-cols "sequence_id=identifiers,class_fst_stage=tiara" \
+    --text-header \
+    --key plot.cat=tiara \
+    ./glClaSqua9_blobdir
+```
+
+## Demo 3
+
+We can add other file types as well:
+
+- **BUSCO full_table.tsv**
+```
+blobtools add \
+    --busco ./precomputed/busco/glClaSqua9.busco.eukaryota_odb10.full_table.tsv \
+    --busco ./precomputed/busco/glClaSqua9.busco.fungi_odb10.full_table.tsv \
+    ./glClaSqua9_blobdir
+```
+
+- **Numeric fields**
+```
+blobtools add \
+    --text ./precomputed/window_stats/glClaSqua9.window_stats.tsv \
+    --text-delimiter '\t' \
+    --text-header \
+    --text-cols sequence=identifiers,eukaryota_odb10_count,fungi_odb10_count \
+    ./glClaSqua9_blobdir/
+```
+
+- **Copy the blobdir and update the BTK API**
+```
+    cp -r glClaSqua9_blobdir /workspace/btk_example/src/data/example/
+    
+    curl $(gp url 8000)/api/v1/search/reload/testkey
+```

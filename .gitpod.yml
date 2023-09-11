@@ -21,6 +21,8 @@ tasks:
 
     source ${HOME}/.bashrc
 
+    mamba create -n tiara -c conda-forge tiara python=3.7 -y
+
     cd /workspace
     curl https://sk13.cog.sanger.ac.uk/glClaSqua9.tgz | tar xzf -
 
