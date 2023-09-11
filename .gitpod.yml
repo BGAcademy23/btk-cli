@@ -72,6 +72,10 @@ tasks:
     --name btk-viewer-$PORT \
     genomehubs/blobtoolkit-viewer:$DOCKERVERSION && gp preview $VIEWERURL/view/all#Datasets
 
+    /workspace/mambaforge/bin/mamba init bash
+
+    source ${HOME}/.bashrc
+    clear
 
 workspaceLocation: "/workspace"
 
