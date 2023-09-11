@@ -12,7 +12,7 @@ ports:
 
 tasks:
 
-- name: install mamba and btk, download data
+- name: env btk
   init: |
     cd /workspace
     wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
@@ -26,10 +26,10 @@ tasks:
     pip install "blobtoolkit[full]"
 
     cd /workspace
-    wget https://sk13.cog.sanger.ac.uk/glClaSqua9.tgz
+    curl https://sk13.cog.sanger.ac.uk/glClaSqua9.tgz | tar xzf -
 
 
-- name: pull btk api and viewer dockers
+- name: docker btk
   init: |
     cd /workspace
     git clone https://github.com/blobtoolkit/blobtoolkit btk_example
@@ -38,12 +38,10 @@ tasks:
     docker pull genomehubs/blobtoolkit-api:$DOCKERVERSION
     docker pull genomehubs/blobtoolkit-viewer:$DOCKERVERSION
 
-- name: run btk api and viewer dockers
-  command: |
     API_PORT=8000
     PORT=8080
-    VIEWERURL=${GITPOD_WORKSPACE_URL/\/\//\/\/$PORT-}
-    APIURL=${GITPOD_WORKSPACE_URL/\/\//\/\/$API_PORT-}
+    VIEWERURL=$(gp url $PORT)
+    APIURL=$(gp url $API_PORT)
     DOCKERVERSION=latest
 
     mkdir -p /workspace/logs
@@ -77,17 +75,7 @@ tasks:
     -e BTK_GDPR_URL= \
     -e BTK_MESSAGE= \
     --name btk-viewer-$PORT \
-    genomehubs/blobtoolkit-viewer:$DOCKERVERSION && gp preview $VIEWERURL/view/all#Filters
-
-- name: activate btk env
-  command: |
-    /workspace/mambaforge/bin/mamba init bash
-
-    source ${HOME}/.bashrc
-
-    mamba activate btk
-
-    clear
+    genomehubs/blobtoolkit-viewer:$DOCKERVERSION && gp preview $VIEWERURL/view/all#Datasets
 
 workspaceLocation: "/workspace"
 

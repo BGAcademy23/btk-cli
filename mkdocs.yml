@@ -3,6 +3,7 @@ edit_uri: https://github.com/bgacademy23/btk-cli/blob/main/docs
 
 nav:
     - Home: README.md
+    - Session Materials: materials.md
     - BGA23: https://bga23.org
 
 theme:
