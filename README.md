@@ -7,7 +7,7 @@ This session is part of [**Biodiversity Genomics Academy 2023**](https://BGA23.o
 Sujai Kumar  
 Senior Bioinformatician and Training Coordinator
 
-Richard Challis  
+Rich Challis  
 Senior Bioinformatician
 
 Tree of Life Programme, Wellcome Sanger Institute
@@ -18,6 +18,8 @@ By the end of this session you will be able to:
 
 1. Install BlobToolKit (BTK) on your own system
 2. Starting from an assembly fasta file and a bam file with reads mapped to the assembly, you will be able to create a blobdir and view the BTK plot
+
+## [Session Materials](docs/materials.md)
 
 ## Prerequisites
 

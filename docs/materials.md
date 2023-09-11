@@ -1,6 +1,6 @@
 # Session Materials
 
-## Slides
+## Introduction to BlobToolKit
 
 ## Demo 1
 
@@ -148,19 +148,25 @@ You can add any categorical value to a contig, it does not have to be a blast hi
 
 For example, the deep-learning based tool **[tiara](https://academic.oup.com/bioinformatics/article/38/2/344/6375939){ : target="_blank" }** can very rapidly estimate if a contig is a eukaryote, bacteria, or organelle.
 
-So, to get a very quick annotation of a BTK plot, you could colour it using tiara. In this demo we install tiara, run tiara, and assign the tiara categories in BTK.
+So, to very quickly assess if your eukaryotic genome assembly has bacteria in it, you could colour it using tiara. In this demo we install tiara, run tiara, and add the tiara categories to BTK.
 
-Install tiara:
+- **Install tiara:**
 ```
-mamba create -n tiara -c conda-forge tiara python=3.7 -y
+# mamba create -n tiara -c conda-forge tiara python=3.7 -y
 mamba activate  tiara
 ```
-Run tiara:
-```
-cd /workspace/glClaSqua9 
-tiara -i glClaSqua9.fasta -o glClaSqua9.tiara -t 8 --pr --tf all -m 1000
-mamba deactivate
 
+- **Run tiara:**
+```
+cd /workspace/glClaSqua9
+
+tiara -i glClaSqua9.fasta -o glClaSqua9.tiara -t 8 --pr --tf all -m 1000
+
+mamba deactivate
+```
+
+- **Add tiara results to blobdir:**
+```
 blobtools add \
     --text glClaSqua9.tiara \
     --text-delimiter "\t" \
@@ -168,6 +174,12 @@ blobtools add \
     --text-header \
     --key plot.cat=tiara \
     ./glClaSqua9_blobdir
+```
+- **Copy the blobdir and update the BTK API**
+```
+    cp -r glClaSqua9_blobdir /workspace/btk_example/src/data/example/
+    
+    curl $(gp url 8000)/api/v1/search/reload/testkey
 ```
 
 ## Demo 3

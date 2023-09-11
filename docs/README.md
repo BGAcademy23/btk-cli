@@ -7,7 +7,7 @@ This session is part of [**Biodiversity Genomics Academy 2023**](https://BGA23.o
 Sujai Kumar  
 Senior Bioinformatician and Training Coordinator
 
-Richard Challis  
+Rich Challis  
 Senior Bioinformatician
 
 Tree of Life Programme, Wellcome Sanger Institute
